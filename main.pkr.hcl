@@ -10,6 +10,8 @@ packer {
 variable "api_url" {}
 variable "token_id" {}
 variable "token_secret" {}
+variable "vm_id" {}
+
 
 source "proxmox-clone" "debian" {
   proxmox_url              = var.api_url
@@ -18,11 +20,11 @@ source "proxmox-clone" "debian" {
 
   node = "ermes"
   clone_vm_id = 104 # EXISTING TEMPLATE
-  vm_id       = 140 # NEW VM/TEMPLATE
+  vm_id       = var.vm_id # NEW VM/TEMPLATE
   vm_name     = "packer-temp"
 
-  cores  = 2
-  memory = 2048
+  cores  = 1
+  memory = 1024
 
   network_adapters {
     bridge = "vmbr0"
@@ -35,13 +37,6 @@ source "proxmox-clone" "debian" {
 
 build {
   sources = ["source.proxmox-clone.debian"]
-
-
-  provisioner "shell-local" {
-    inline = [
-      "curl -k -X DELETE -H 'Authorization: PVEAPIToken=root@pam!packer=295testextestetestd' \"https://ermes:8006/api2/json/nodes/ermes/qemu/140\""
-    ]
-  }
 
   provisioner "shell" {
     inline = [
