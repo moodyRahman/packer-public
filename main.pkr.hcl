@@ -40,8 +40,8 @@ build {
 
   provisioner "shell" {
     inline = [
-      "sudo apt update",
-      "sudo apt install -y btop",
+      "sudo apt-get update",
+      "sudo apt-get install -y dnsutils nmap iperf3"
     ]
   }
 }
