@@ -33,7 +33,6 @@ source "proxmox-clone" "debian" {
     model  = "virtio"
   }
 
-  ssh_username = "moody"
   ssh_timeout  = "10m"
 }
 
