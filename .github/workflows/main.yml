@@ -32,7 +32,7 @@ jobs:
 
     - name: packer init
       run: |
-          packer init
+          packer init .
 
     - name: build packer image
       run: |
