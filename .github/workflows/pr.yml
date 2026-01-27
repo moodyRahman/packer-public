@@ -13,6 +13,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: ls
+      run: |
+        ls
+        cat *
+
     - uses: hashicorp-contrib/setup-packer@v3.0.1
       # with:
         # github-token: # optional, default is ${{ github.token }}
@@ -23,7 +28,11 @@ jobs:
         # Your Tailscale authentication key, from the admin panel.
         authkey: ${{ secrets.TS_AUTHKEY }}
         hostname: temp-runner
-        
+
+    - name: turn off existing vm
+      run: |
+          curl -k -X POST   -H 'Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}'   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/301"
+
 
     - name: delete existing vm
       run: |

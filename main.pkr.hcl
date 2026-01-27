@@ -22,6 +22,7 @@ source "proxmox-clone" "debian" {
   clone_vm_id = 104 # EXISTING TEMPLATE
   vm_id       = var.vm_id # NEW VM/TEMPLATE
   vm_name     = "packer-temp"
+  ssh_username = "moody"
 
   cores  = 1
   memory = 1024
@@ -31,7 +32,6 @@ source "proxmox-clone" "debian" {
     model  = "virtio"
   }
 
-  ssh_username = "moody"
   ssh_timeout  = "10m"
 }
 
@@ -40,8 +40,8 @@ build {
 
   provisioner "shell" {
     inline = [
-      "sudo apt update",
-      "sudo apt install -y btop",
+      "sudo apt-get update",
+      "sudo apt-get install -y dnsutils nmap iperf3"
     ]
   }
 }
