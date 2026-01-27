@@ -32,6 +32,7 @@ jobs:
 
     - name: delete existing vm
       run: |
+          curl -k -X POST   -H 'Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}'   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/301"
           curl -k -X DELETE   -H "Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}"   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/301"
 
     - name: packer init
