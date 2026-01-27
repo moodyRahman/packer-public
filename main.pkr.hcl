@@ -22,6 +22,8 @@ source "proxmox-clone" "debian" {
   clone_vm_id = 104 # EXISTING TEMPLATE
   vm_id       = var.vm_id # NEW VM/TEMPLATE
   vm_name     = "packer-temp"
+  ssh_username = "moody"
+  ssh_password = "testtest"
 
   cores  = 1
   memory = 1024
