@@ -30,6 +30,10 @@ jobs:
       run: |
           curl -k -X DELETE   -H "Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}"   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/140"
 
+    - name: packer init
+      run: |
+          packer init
+
     - name: build packer image
       run: |
           packer build -var 'api_url=${{ secrets.PROXMOX_ENDPOINT }}' -var 'token_id=${{ secrets.PROXMOX_TOKEN_ID }}' -var 'token_secret=${{ secrets.PROXMOX_KEY }}' .
