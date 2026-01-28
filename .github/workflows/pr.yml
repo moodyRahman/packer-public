@@ -37,6 +37,9 @@ jobs:
       run: |
           curl -k -X POST   -H 'Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}'   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/301/status/shutdown"
 
+    - name: wait for shutdown...
+      run: |
+          sleep 5
 
     - name: delete existing vm
       run: |
