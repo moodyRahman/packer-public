@@ -1,4 +1,5 @@
 name: Build image and publish
+runs-on: self-hosted 
 
 on:
   push:

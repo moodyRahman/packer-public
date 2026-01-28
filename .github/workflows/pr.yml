@@ -1,4 +1,5 @@
 name: Build image in dev env
+runs-on: self-hosted 
 
 on:
   pull_request:
