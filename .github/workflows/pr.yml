@@ -44,5 +44,5 @@ jobs:
 
     - name: build packer image
       run: |
-          packer build -var 'api_url=${{ secrets.PROXMOX_ENDPOINT }}' -var 'token_id=${{ secrets.PROXMOX_TOKEN_ID }}' -var 'token_secret=${{ secrets.PROXMOX_KEY }}' -var 'vm_id=301' .
+          packer build -var 'api_url=${{ secrets.PROXMOX_ENDPOINT }}' -var 'token_id=${{ secrets.PROXMOX_TOKEN_ID }}' -var 'token_secret=${{ secrets.PROXMOX_KEY }}' -var 'base_passwd=${{ secrets.BASE_PASSWD }}' -var 'vm_id=301' .
 
