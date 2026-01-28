@@ -47,7 +47,6 @@ build {
       "sudo apt-get install -y curl wget git unzip gnupg lsb-release ca-certificates jq net-tools iproute2",
       "sudo apt-get install -y htop btop sysstat iotop iftop nload duf",
       "sudo apt-get install -y cloud-init",
-      "sudo apt-get install -y htop btop sysstat iotop iftop nload duf",
 
     ]
   }
