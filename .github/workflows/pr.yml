@@ -23,12 +23,12 @@ jobs:
       # with:
         # github-token: # optional, default is ${{ github.token }}
 
-    - name: Connect Tailscale
-      uses: tailscale/github-action@v2
-      with:
-        # Your Tailscale authentication key, from the admin panel.
-        authkey: ${{ secrets.TS_AUTHKEY }}
-        hostname: temp-runner
+    # - name: Connect Tailscale
+    #   uses: tailscale/github-action@v2
+    #   with:
+    #     # Your Tailscale authentication key, from the admin panel.
+    #     authkey: ${{ secrets.TS_AUTHKEY }}
+    #     hostname: temp-runner
 
     - name: turn off existing vm
       run: |
