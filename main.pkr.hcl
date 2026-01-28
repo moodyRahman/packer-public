@@ -43,7 +43,7 @@ build {
   provisioner "shell" {
     inline = [
       "sudo apt-get update",
-      "sudo apt-get install -y dnsutils nmap iperf3"
+      "sudo apt-get install -y dnsutils nmap iperf3 traceroute lsof tcpdump socat"
     ]
   }
 }
