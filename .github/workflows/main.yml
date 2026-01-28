@@ -9,26 +9,10 @@ on:
 jobs:
   build:
     name: build and push image
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v4
-
-    - uses: hashicorp-contrib/setup-packer@v3.0.1
-      # with:
-        # github-token: # optional, default is ${{ github.token }}
-
-    - name: Connect Tailscale
-      uses: tailscale/github-action@v2
-      with:
-        # Your Tailscale authentication key, from the admin panel.
-        authkey: ${{ secrets.TS_AUTHKEY }}
-        hostname: temp-runner
-
-
-    - name: disable protection
-      run: |
-          curl -k -X PUT   -H 'Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}' -d "protection=0"   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/140/config"
 
     - name: turn off existing vm
       run: |
