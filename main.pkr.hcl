@@ -11,6 +11,7 @@ variable "api_url" {}
 variable "token_id" {}
 variable "token_secret" {}
 variable "vm_id" {}
+variable "base_passwd" {}
 
 
 source "proxmox-clone" "debian" {
@@ -23,6 +24,7 @@ source "proxmox-clone" "debian" {
   vm_id       = var.vm_id # NEW VM/TEMPLATE
   vm_name     = "packer-temp"
   ssh_username = "moody"
+  ssh_password = var.base_passwd
 
   cores  = 1
   memory = 1024
