@@ -1,5 +1,4 @@
 name: Build image in dev env
-runs-on: self-hosted 
 
 on:
   pull_request:
@@ -9,7 +8,7 @@ on:
 jobs:
   build:
     name: build and push image
-    runs-on: ubuntu-latest
+    runs-on: self-hosted 
 
     steps:
     - uses: actions/checkout@v4
@@ -19,7 +18,7 @@ jobs:
         ls
         cat *
 
-    - uses: hashicorp-contrib/setup-packer@v3.0.1
+    # - uses: hashicorp-contrib/setup-packer@v3.0.1
       # with:
         # github-token: # optional, default is ${{ github.token }}
 
