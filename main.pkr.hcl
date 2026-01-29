@@ -40,10 +40,19 @@ source "proxmox-clone" "debian" {
 build {
   sources = ["source.proxmox-clone.debian"]
 
+  provisioner "shell-local" {
+    inline = [
+      "curl -k -X PUT -H 'Authorization: PVEAPIToken=${var.token_id}=${var.token_secret}' -d \"protection=0\"   \"${var.api_url}/nodes/ermes/qemu/${var.vm_id}/config\" "
+    ]
+  }
+
   provisioner "shell" {
     inline = [
       "sudo apt-get update",
-      "sudo apt-get install -y dnsutils nmap iperf3"
+      "sudo apt-get install -y dnsutils nmap iperf3 traceroute lsof tcpdump socat",
+      # "sudo apt-get install -y curl wget git unzip gnupg lsb-release ca-certificates jq net-tools iproute2",
+      # "sudo apt-get install -y htop btop sysstat iotop iftop nload duf",
+      # "sudo apt-get install -y cloud-init",
     ]
   }
 }
