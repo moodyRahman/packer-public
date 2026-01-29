@@ -12,6 +12,8 @@ variable "token_id" {}
 variable "token_secret" {}
 variable "vm_id" {}
 variable "base_passwd" {}
+variable "vm_name" {}
+
 
 
 source "proxmox-clone" "debian" {
@@ -22,7 +24,7 @@ source "proxmox-clone" "debian" {
   node = "ermes"
   clone_vm_id = 104 # EXISTING TEMPLATE
   vm_id       = var.vm_id # NEW VM/TEMPLATE
-  vm_name     = "base-image"
+  vm_name     = var.vm_name
   ssh_username = "moody"
   ssh_password = var.base_passwd
 
