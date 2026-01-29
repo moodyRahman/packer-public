@@ -13,11 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: ls
-      run: |
-        ls
-        cat *
-
     - name: turn off existing vm
       run: |
           curl -k -X POST   -H 'Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}'   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/301/status/shutdown"
