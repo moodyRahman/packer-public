@@ -18,17 +18,6 @@ jobs:
         ls
         cat *
 
-    # - uses: hashicorp-contrib/setup-packer@v3.0.1
-      # with:
-        # github-token: # optional, default is ${{ github.token }}
-
-    # - name: Connect Tailscale
-    #   uses: tailscale/github-action@v2
-    #   with:
-    #     # Your Tailscale authentication key, from the admin panel.
-    #     authkey: ${{ secrets.TS_AUTHKEY }}
-    #     hostname: temp-runner
-
     - name: turn off existing vm
       run: |
           curl -k -X POST   -H 'Authorization: PVEAPIToken=${{ secrets.PROXMOX_TOKEN_ID }}=${{ secrets.PROXMOX_KEY }}'   "${{ secrets.PROXMOX_ENDPOINT }}/nodes/ermes/qemu/301/status/shutdown"
