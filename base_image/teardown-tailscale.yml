@@ -1,0 +1,42 @@
+---
+- name: Install tailscale logout script + shutdown systemd unit
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Create tailscale logout script
+      copy:
+        dest: /usr/local/bin/tailscale-logout.sh
+        mode: '0755'
+        content: |
+          #!/bin/bash
+          echo "$(date) Tailscale logout script executed" >> /var/log/tailscale-logout.log
+          /usr/bin/tailscale logout
+          echo "logged out"
+
+    - name: Create systemd service that runs script on shutdown
+      copy:
+        dest: /etc/systemd/system/tailscale-logout.service
+        mode: '0644'
+        content: |
+          [Unit]
+          Description=Logout from Tailscale on shutdown
+          DefaultDependencies=no
+          Before=shutdown.target reboot.target halt.target poweroff.target
+
+          [Service]
+          Type=oneshot
+          ExecStop=/usr/local/bin/tailscale-logout.sh
+          RemainAfterExit=yes
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Enable the shutdown service
+      systemd:
+        name: tailscale-logout.service
+        enabled: yes

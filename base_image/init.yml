@@ -1,0 +1,26 @@
+- name: Run commands on system without Python
+  hosts: all
+  gather_facts: no
+  become: yes
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  vars_files:
+  - ../../.env.yml
+
+  tasks:
+    - name: Enable passwordless sudo
+      raw: |
+        usermod -aG sudo moody
+        echo "moody ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers >/dev/null && sudo visudo -cf /etc/sudoers
+
+    - name: Create .ssh directory
+      raw: |
+        mkdir -p /home/moody/.ssh
+        chown moody:moody /home/moody/.ssh
+        chmod 700 /home/moody/.ssh
+
+    - name: Install public key for user moody
+      raw: |
+        echo "{{ PUB_KEY }}" > /home/moody/.ssh/authorized_keys
+        chown moody:moody /home/moody/.ssh/authorized_keys
+        chmod 600 /home/moody/.ssh/authorized_keys

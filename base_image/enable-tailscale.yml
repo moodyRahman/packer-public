@@ -1,0 +1,17 @@
+- name: Run Tailscale install with auth key
+  hosts: all
+  become: yes
+  gather_facts: no
+  vars_files:
+  - ../../.env.yml
+
+
+  tasks:
+    - name: Run install script with injected env variable
+      ansible.builtin.shell: curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key={{ TS_KEY }}
+      register: result
+
+    - debug: msg="{{ result.stdout }}"
+
+    - name: Restart tailscale
+      ansible.builtin.shell: tailscale down && tailscale up

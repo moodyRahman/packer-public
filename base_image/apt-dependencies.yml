@@ -1,0 +1,60 @@
+---
+- name: Install common developer and networking tools
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Ensure APT cache is up to date
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install system essentials
+      apt:
+        name:
+          - curl
+          - wget
+          - git
+          - vim
+          - unzip
+          - gnupg
+          - lsb-release
+          - ca-certificates
+          - jq
+          - net-tools
+          - iproute2
+        state: present
+
+    - name: Install monitoring and performance tools
+      apt:
+        name:
+          - htop
+          - btop
+          - sysstat
+          - iotop
+          - iftop
+          - nload
+          - duf
+        state: present
+
+    - name: Install networking and debugging tools
+      apt:
+        name:
+          - dnsutils
+          - traceroute
+          - nmap
+          - socat
+          - iperf3
+          - lsof
+          - tcpdump
+        state: present
+
+    - name: Install disk and cloud utilities
+      apt:
+        name:
+          - cloud-guest-utils
+          - util-linux
+          - gdisk
+          - mouse
+        state: present

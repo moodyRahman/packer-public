@@ -1,0 +1,79 @@
+---
+- name: Configure auto root expansion
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure growpart and LVM tools are installed
+      ansible.builtin.package:
+        name:
+          - cloud-guest-utils
+          - lvm2
+        state: present
+
+    - name: Create grow root script
+      ansible.builtin.copy:
+        dest: /usr/local/bin/auto-grow-root.sh
+        mode: '0755'
+        content: |
+          #!/bin/bash
+          set -uo pipefail
+          growpart /dev/sda 1
+          EXIT_CODE=$?
+          if [ "$EXIT_CODE" -eq 1 ]; then
+              exit 0
+          elif [ "$EXIT_CODE" -ne 0 ]; then
+              exit "$EXIT_CODE"
+          fi
+          pvresize /dev/sda1
+          lvextend -r -l +100%FREE /dev/base/root
+
+    - name: Create systemd service for auto-grow-root
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/auto-grow-root.service
+        mode: '0644'
+        content: |
+          [Unit]
+          Description=Auto-expand root filesystem if disk size has changed
+          After=multi-user.target lvm2-monitor.service
+          Wants=lvm2-monitor.service
+
+          [Service]
+          Type=oneshot
+          ExecStart=/usr/local/bin/auto-grow-root.sh
+          StandardOutput=journal
+          StandardError=journal
+          RemainAfterExit=true
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Create systemd path unit
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/auto-grow-root.path
+        mode: '0644'
+        content: |
+          [Unit]
+          Description=Watch for /dev/sda size changes to trigger root grow
+
+          [Path]
+          PathChanged=/sys/block/sda/size
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: yes
+
+    - name: Enable and start service and path
+      ansible.builtin.systemd:
+        name: auto-grow-root.service
+        enabled: yes
+        state: started
+
+    - name: Enable and start path unit
+      ansible.builtin.systemd:
+        name: auto-grow-root.path
+        enabled: yes
+        state: started
