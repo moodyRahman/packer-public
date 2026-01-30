@@ -51,11 +51,27 @@ source "proxmox-clone" "debian" {
 build {
   sources = ["source.proxmox-clone.debian"]
 
-  provisioner "shell-local" {
+  # provisioner "shell-local" {
+  #   inline = [
+  #     "curl -k -X PUT -H 'Authorization: PVEAPIToken=${var.token_id}=${var.token_secret}' -d \"protection=0\"   \"${var.api_url}/nodes/ermes/qemu/${var.vm_id}/config\" "
+  #   ]
+  # }
+
+  provisioner "shell" {
     inline = [
-      "curl -k -X PUT -H 'Authorization: PVEAPIToken=${var.token_id}=${var.token_secret}' -d \"protection=0\"   \"${var.api_url}/nodes/ermes/qemu/${var.vm_id}/config\" "
+      "sudo usermod -aG sudo moody",
+      "echo 'moody ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers >/dev/null && sudo visudo -cf /etc/sudoers"
     ]
   }
+
+  provisioner "shell" {
+    inline = [
+      "sudo apt install pipx",
+      "pipx install --include-deps ansible",
+      "pipx ensurepath"
+    ]
+  }
+  
 
   provisioner "ansible" {
     playbook_file = "./base_image/apt-dependencies.yml"
