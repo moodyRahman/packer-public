@@ -48,16 +48,21 @@ build {
     ]
   }
 
-  provisioner "shell" {
-    inline = [
-      "sudo apt-get update",
-      "sudo apt-get install -y dnsutils nmap iperf3 traceroute lsof tcpdump socat",
-      "sudo apt-get install -y curl wget git unzip gnupg lsb-release ca-certificates jq net-tools iproute2",
-      "sudo apt-get install -y htop btop sysstat iotop iftop nload duf",
-      "sudo apt-get install -y cloud-init",
-      "sudo usermod -aG sudo moody",
-      "echo 'moody ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers >/dev/null && sudo visudo -cf /etc/sudoers"
-    ]
+  provisioner "ansible" {
+    playbook_file = "./base_image/apt-dependencies.yml"
   }
+
+  # provisioner "shell" {
+  #   inline = [
+  #     "sudo apt-get update",
+  #     "sudo apt-get install -y dnsutils nmap iperf3 traceroute lsof tcpdump socat",
+  #     "sudo apt-get install -y curl wget git unzip gnupg lsb-release ca-certificates jq net-tools iproute2",
+  #     "sudo apt-get install -y htop btop sysstat iotop iftop nload duf",
+  #     "sudo apt-get install -y cloud-init",
+  #     "sudo usermod -aG sudo moody",
+  #     "echo 'moody ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers >/dev/null && sudo visudo -cf /etc/sudoers"
+  #   ]
+  # }
+
 }
 
