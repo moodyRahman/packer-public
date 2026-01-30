@@ -66,7 +66,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "sudo apt-get install -y ansible"
+      "sudo apt-get install -y ansible-core"
     ]
   }
   
