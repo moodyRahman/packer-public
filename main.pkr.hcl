@@ -7,6 +7,15 @@ packer {
   }
 }
 
+packer {
+  required_plugins {
+    ansible = {
+      version = "~> 1"
+      source = "github.com/hashicorp/ansible"
+    }
+  }
+}
+
 variable "api_url" {}
 variable "token_id" {}
 variable "token_secret" {}
