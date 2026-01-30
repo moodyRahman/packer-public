@@ -66,9 +66,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "sudo apt install -y pipx",
-      "pipx install --include-deps ansible",
-      "pipx ensurepath"
+      "sudo apt-get install -y ansible"
     ]
   }
   
