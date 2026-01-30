@@ -64,16 +64,16 @@ build {
     ]
   }
 
-  provisioner "shell" {
-    inline = [
-      "sudo apt install pipx",
-      "pipx install --include-deps ansible",
-      "pipx ensurepath"
-    ]
-  }
+  # provisioner "shell" {
+  #   inline = [
+  #     "sudo apt install pipx",
+  #     "pipx install --include-deps ansible",
+  #     "pipx ensurepath"
+  #   ]
+  # }
   
 
-  provisioner "ansible" {
+  provisioner "ansible-local" {
     playbook_file = "./base_image/apt-dependencies.yml"
   }
 
