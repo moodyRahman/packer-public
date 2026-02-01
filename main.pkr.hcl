@@ -60,18 +60,13 @@ build {
   provisioner "shell" {
     inline = [
       "sudo usermod -aG sudo moody",
-      "echo 'moody ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers >/dev/null && sudo visudo -cf /etc/sudoers"
-    ]
-  }
-
-  provisioner "shell" {
-    inline = [
-      "sudo apt-get install -y ansible-core"
+      "echo 'moody ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers >/dev/null && sudo visudo -cf /etc/sudoers",
+      "sudo apt install python3"
     ]
   }
   
 
-  provisioner "ansible-local" {
+  provisioner "ansible" {
     playbook_file = "./base_image/apt-dependencies.yml"
   }
 
