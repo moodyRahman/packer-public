@@ -56,5 +56,4 @@
           - cloud-guest-utils
           - util-linux
           - gdisk
-          - mouse
         state: present
