@@ -24,6 +24,7 @@
           - jq
           - net-tools
           - iproute2
+          - qemu-guest-agent
         state: present
 
     - name: Install monitoring and performance tools
