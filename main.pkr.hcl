@@ -36,10 +36,13 @@ source "proxmox-clone" "debian" {
   vm_name     = var.vm_name
   ssh_username = "moody"
   ssh_password = var.base_passwd
-
+  
+  cpu_type = "host"
   cores  = 1
   memory = 1024
   scsi_controller = "virtio-scsi-single"
+  cloud_init = true
+  os = "l26"
 
   network_adapters {
     bridge = "vmbr0"
