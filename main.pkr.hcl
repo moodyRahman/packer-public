@@ -39,6 +39,7 @@ source "proxmox-clone" "debian" {
 
   cores  = 1
   memory = 1024
+  scsi_controller = "virtio-scsi-single"
 
   network_adapters {
     bridge = "vmbr0"
