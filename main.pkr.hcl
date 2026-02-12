@@ -42,7 +42,7 @@ source "proxmox-clone" "debian" {
   memory = 1024
   scsi_controller = "virtio-scsi-single"
   cloud_init = true
-  cloud_init_storage_pool = "media-zfs"
+  cloud_init_storage_pool = "local-lvm"
   os = "l26"
 
   network_adapters {
