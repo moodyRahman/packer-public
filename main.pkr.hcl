@@ -44,6 +44,7 @@ source "proxmox-clone" "debian" {
   cloud_init = true
   cloud_init_storage_pool = "local-lvm"
   os = "l26"
+  
 
   network_adapters {
     bridge = "vmbr0"
