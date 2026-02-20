@@ -75,6 +75,7 @@ build {
   provisioner "ansible" {
     playbook_file = "./base_image/apt-dependencies.yml"
   }
+
   
 
   # provisioner "shell" {
